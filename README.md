@@ -1,4 +1,4 @@
-# survey biz component
+# Survey biz component
 background survey core code via urocissa rpc service which was finished by liujun all.
 
 server layer:accept survey task from outside and send subtask to middle layer.
