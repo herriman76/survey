@@ -1,11 +1,7 @@
 study gitHub.
 in most project,we use svn.
-add branch now
 
-
-
-L4L4L4L4L
-555555555555
+so this file is used to study gitHub op. :)
 
 
 
