@@ -1,1 +1,2 @@
-study git
+study gitHub.
+in most project,we use svn.
