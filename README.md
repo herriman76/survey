@@ -9,4 +9,4 @@ client layer:accept sub task and finish it,then send the status of it to middle.
 all the comunication between them are throuth RPC tool- urocissa which finished by my colleage and me.
 
 【remark】
-The function of survey is show in survey_profile.png & survey_detail.png
+以下所有功能全部由作者完成，功能图见：survey_profile.png & survey_detail.png
