@@ -17,6 +17,7 @@ client layer:accept sub task and finish it,then send the status of it to middle.
    异步接收处理结果，持久化并更新map池中任务，如果任务的所有在线子任务都完成，就从map中清除。
    
 ## 2. 功能特点：
+   通讯底层使用公司的基于Netty，自定义协议的通讯组件urocissa
    子任务服务自动注册到中心，心跳子任务状态与配置，策略RoundRobin或者weight来选择
    中心分配任务有特殊线程进行重试与超时控制
    线程池拒绝服务可设置接收暂停，任务流量控制
@@ -25,9 +26,16 @@ client layer:accept sub task and finish it,then send the status of it to middle.
    由web应用的spring的生命周期类，控制中心启动与停止
    由web应用提供用户提供的背调数据，未来也可用其它协议
    
-## 3. 其它：
+## 3. 进一步优化：
    此版本已经正式使用。后来进一步优化没包含在内，包括请求持久化从web移到组件内，类更规范，配置化参数，分发可控制暂停接收请求，容器启停接受spring生命周期管理，实时监控，但总体功能没大变化。
+   
+## 4. 参与通讯中间件优化：
+   在开发此组件过程中，对公司的通讯组件urocissa，我也进行了修改。包括：
+   - 业务心跳合并到底层心跳，提供心跳数据采集接口
+   - 异步futurn，在get外，增加异步回调设置
+   - 通讯层不仅可以注册处理者processor，还可以设置对应的线程池，这样个性化线程名称与阻塞队列容量。（模仿rocketmq）
 
+## 5. 核心类：
    复杂的类在如下包中：
    survey-server/src/main/java/com/sanyinggroup/corp/survey/server/container/
    survey-middle/src/main/java/com/sanyinggroup/corp/survey/middle/container/
