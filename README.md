@@ -28,6 +28,8 @@ client layer:accept sub task and finish it,then send the status of it to middle.
    
 ## 3. 进一步优化：
    此版本已经正式使用,但并非优化版本。后来进一步优化没包含在内，包括请求持久化从web移到组件内，类更规范，配置化参数，分发可控制暂停接收请求，容器启停接受spring生命周期管理，实时监控，但总体功能没大变化。
+   **未来计划进一步整合进spring，实现自动配置，并在SmartLifecycle中实现启动与停止。当前是自定义一个@Component类实现InitializingBean与，autowire了所有组件要用的外部接口实现，afterPropertiesSet中配置给组件。在init中启动了本组件。**
+   
    
 ## 4. 参与通讯中间件优化：
    在开发此组件过程中，对公司的通讯组件urocissa，我也进行了修改。包括：
