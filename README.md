@@ -6,7 +6,8 @@ middle layer:accept sub task and choose a client, then send it to the client who
               job include online and offline subtask(survey by person from telepnone survey center).
 client layer:accept sub task and finish it,then send the status of it to middle.
 
-# **背调业务组件**   ----由LIUJUN一人设计开发
+# **背调业务组件**（初始版本）
+             ----由LIUJUN一人设计开发
 
 ## 1. 业务目标：
    - 接收用户请求背调数据，产生任务对象
@@ -26,19 +27,23 @@ client layer:accept sub task and finish it,then send the status of it to middle.
    - 由web应用的spring的生命周期类，控制中心启动与停止
    - 由web应用提供用户提供的背调数据，未来也可用其它协议
    
-## 3. 进一步优化：
+## 3. 优化：
+### 3.1 部分实施中
    此版本已经正式使用,但并非优化版本。后来进一步优化没包含在内，包括请求持久化从web移到组件内，类更规范，配置化参数，分发可控制暂停接收请求，容器启停接受spring生命周期管理，实时监控，但总体功能没大变化。
-   **未来计划进一步整合进spring，实现自动配置，并在SmartLifecycle中实现启动与停止。当前是自定义一个@Component类实现InitializingBean与，autowire了所有组件要用的外部接口实现，afterPropertiesSet中配置给组件。在init中启动了本组件。**
    
+### 3.2 未来计划
+   - **进一步整合进spring，实现自动配置，并在SmartLifecycle中实现启动与停止。当前是自定义一个@Component类实现InitializingBean与，autowire了所有组件要用的外部接口实现，afterPropertiesSet中配置给组件。在init中启动了本组件。**
+   - 等通讯中间件进一步优化后（实现不同消息handler根据类型设置个性化的线程池）后，业务组件可以按业务量使用多个线程池按类型分发消息及处理返回值。
+
+## 4. 核心类：
+   复杂的类在如下包中：
+   - survey-server/src/main/java/com/sanyinggroup/corp/survey/server/container/
+   - survey-middle/src/main/java/com/sanyinggroup/corp/survey/middle/container/
    
-## 4. 参与通讯中间件优化：
+## 5. 参与所使用的通讯中间件优化：
    在开发此组件过程中，对公司的通讯组件urocissa，我也进行了修改。包括：
    - 业务心跳合并到底层心跳，提供心跳数据采集接口
    - 异步futurn，在get外，增加异步回调设置
    - 通讯层不仅可以注册处理者processor，还可以设置对应的线程池，这样个性化线程名称与阻塞队列容量。（模仿rocketmq）
    - 原组件的加密的是协议中body部分，是msg->java序列化->byte[]->des加密->byte[]->marshaller写byteBuf过程，我将java序列化改为hassian.
 
-## 5. 核心类：
-   复杂的类在如下包中：
-   - survey-server/src/main/java/com/sanyinggroup/corp/survey/server/container/
-   - survey-middle/src/main/java/com/sanyinggroup/corp/survey/middle/container/
