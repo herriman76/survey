@@ -34,6 +34,7 @@ client layer:accept sub task and finish it,then send the status of it to middle.
 ### 3.2 未来计划
    - **进一步整合进spring，实现自动配置，并在SmartLifecycle中实现启动与停止。当前是自定义一个@Component类实现InitializingBean与，autowire了所有组件要用的外部接口实现，afterPropertiesSet中配置给组件。在init中启动了本组件。**
    - 等通讯中间件进一步优化后（实现不同消息handler根据类型设置个性化的线程池）后，业务组件可以按业务量使用多个线程池按类型分发消息及处理返回值。
+   - 等需要背调中心扩容时，注册功能就需要单独考虑了,并且注册中心高可用，考虑用zk按类型建临时节点方式监控子应用。
 
 ## 4. 核心类：
    复杂的类在如下包中：
