@@ -36,6 +36,7 @@ client layer:accept sub task and finish it,then send the status of it to middle.
    - 业务心跳合并到底层心跳，提供心跳数据采集接口
    - 异步futurn，在get外，增加异步回调设置
    - 通讯层不仅可以注册处理者processor，还可以设置对应的线程池，这样个性化线程名称与阻塞队列容量。（模仿rocketmq）
+   - 原组件的加密的是协议中body部分，是msg->java序列化->byte[]->des加密->byte[]->marshaller写byteBuf过程，我将java序列化改为hassian.
 
 ## 5. 核心类：
    复杂的类在如下包中：
