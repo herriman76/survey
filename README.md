@@ -34,7 +34,7 @@ client layer:accept sub task and finish it,then send the status of it to middle.
 ### 3.2 未来计划
    - **进一步整合进spring，实现自动配置，并在SmartLifecycle中实现启动与停止。当前是自定义一个@Component类实现InitializingBean与，autowire了所有组件要用的外部接口实现，afterPropertiesSet中配置给组件。在init中启动了本组件。**
    - 等通讯中间件进一步优化后（实现不同消息handler根据类型设置个性化的线程池）后，业务组件可以按业务量使用多个线程池按类型分发消息及处理返回值。
-   - 等需要背调中心扩容时，注册功能就需要单独考虑了,并且注册中心高可用，考虑用zk按类型建临时节点方式监控子应用。
+   - 等需要背调中心扩容时，注册功能也许需要单独考虑了,并且注册中心高可用，一般用zookeeper按类型建临时节点方式监控子应用。但本应用的子应用全量注册到背调中心，其实自身实现注册就可以了。
 
 ## 4. 核心类：
    复杂的类在如下包中：
@@ -46,5 +46,5 @@ client layer:accept sub task and finish it,then send the status of it to middle.
    - 业务心跳合并到底层心跳，提供心跳数据采集接口
    - 异步futurn，在get外，增加异步回调设置
    - 通讯层不仅可以注册处理者processor，还可以设置对应的线程池，这样个性化线程名称与阻塞队列容量。（模仿rocketmq）
-   - 原组件的加密的是协议中body部分，是msg->java序列化->byte[]->des加密->byte[]->marshaller写byteBuf过程，我将java序列化改为hassian.
+   - 原组件的加密的是协议中body部分，是msg->java序列化->byte[]->des加密->byte[]->marshaller写byteBuf过程，居然中间出现了低效的Jdk序列化，我将java序列化改为hassian.
 
