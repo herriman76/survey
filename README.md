@@ -37,15 +37,13 @@ client layer:accept sub task and finish it,then send the status of it to middle.
    - 等需要背调中心扩容时，注册功能也许需要单独考虑了,并且注册中心高可用，一般用zookeeper按类型建临时节点方式监控子应用。但本应用的子应用全量注册到背调中心，其实自身实现注册就可以了。
 
 ## 4. 核心类：
-   复杂的类在如下包中：
-   - survey-server/src/main/java/com/sanyinggroup/corp/survey/server/container/
-   - survey-middle/src/main/java/com/sanyinggroup/corp/survey/middle/container/
-   复杂核心类的基本结构与考量：
+   最复杂的类在*.container包中，一般我会设计一个核心类统领全局(类似rocketmq中的controller类)，核心类的基本结构与考量如下：
    - 自身可能是工厂产生，或者是单例对象
-   - 包含多个线程，工作线程与自身守护线程，可能需要锁进行同步
-   - 包含共享变量，或者共享数据容器，注意volitile/concurrent
-   - 自身产生的同类数据享元模式存放，一般static map
-   - 持有其它重要功能类，并用设置回调类感知变化
+   - 它持有其它功能类，其它功能类一般不相互引用，但它与功能类可相互引用
+   - 包含多个线程，工作线程与自身守护线程，可能需要锁进行同步，Synchronized优化偏向锁，自旋锁，锁再升级，性能可以的
+   - 包含共享变量，或者共享数据容器，注意volitile/concurrent/atom使用
+   - 自身产生的同类对象享元模式存放，一般static map
+   - 持有其它重要功能类，可能会被设置回调类，让核心类感知变化
    - 有生命周期，优雅的启动与关闭
    - 自身持有的重要类可替换，如果是策略模式，加载根据情况，可通过spi，或者awarespring容器，或者工厂，或者配置参数，或者如dubbo的extension。
    
