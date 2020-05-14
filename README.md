@@ -40,6 +40,14 @@ client layer:accept sub task and finish it,then send the status of it to middle.
    复杂的类在如下包中：
    - survey-server/src/main/java/com/sanyinggroup/corp/survey/server/container/
    - survey-middle/src/main/java/com/sanyinggroup/corp/survey/middle/container/
+   复杂核心类的基本结构与考量：
+   - 自身可能是工厂产生，或者是单例对象
+   - 包含多个线程，工作线程与自身守护线程，可能需要锁进行同步
+   - 包含共享变量，或者共享数据容器，注意volitile/concurrent
+   - 自身产生的同类数据享元模式存放，一般static map
+   - 持有其它重要功能类，并用设置回调类感知变化
+   - 有生命周期，优雅的启动与关闭
+   - 自身持有的重要类可替换，如果是策略模式，加载根据情况，可通过spi，或者awarespring容器，或者工厂，或者配置参数，或者如dubbo的extension。
    
 ## 5. 参与所使用的通讯中间件优化：
    在开发此组件过程中，对公司的通讯组件urocissa，我也进行了修改。包括：
