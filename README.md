@@ -18,7 +18,7 @@ client layer:accept sub task and finish it,then send the status of it to middle.
    - 异步接收处理结果，持久化并更新map池中任务，如果任务的所有在线子任务都完成，就从map中清除。
    
 ## 2. 功能特点：
-   - 通讯底层使用公司的基于Netty，自定义协议的通讯组件urocissa
+   - 通讯底层使用公司的基于Netty，自定义协议的通讯组件urocissa，心跳同步处理，消息结果异步回调处理。
    - 子任务服务自动注册到中心，心跳子任务状态与配置，策略RoundRobin或者weight来选择
    - 中心分配任务有特殊线程进行重试与超时控制
    - 线程池拒绝服务可设置接收暂停，任务流量控制
@@ -26,6 +26,7 @@ client layer:accept sub task and finish it,then send the status of it to middle.
    - 由web应用spring容器类提供持久化工具配置中心接口，与子任务处理接口的真正处理类
    - 由web应用的spring的生命周期类，控制中心启动与停止
    - 由web应用提供用户提供的背调数据，未来也可用其它协议
+   - 接收外部请求采用waL思路存库再内存处理，守护线程可提取并处理系统崩溃重启后的数据。
    
 ## 3. 优化：
 ### 3.1 部分实施中
