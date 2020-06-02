@@ -7,7 +7,8 @@ middle layer:accept sub task and choose a client, then send it to the client who
 client layer:accept sub task and finish it,then send the status of it to middle.
 
 # **背调业务组件**（初始版本）
-             ----由LIUJUN一人设计开发
+
+   序：由LIUJUN一人设计开发，第一次写组件，初版demo一周完工，现在看着也许蛮差的，也有不少优化没落实。当时学习的源码也少，还有其它很多开发任务，业务上的频繁变更，指导中底级开发，无心把这个不断完善，只能功能变更可用。
 
 ## 1. 业务目标：
    - 接收用户请求背调数据，产生任务对象
