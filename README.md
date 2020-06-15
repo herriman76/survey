@@ -51,8 +51,8 @@ client layer:accept sub task and finish it,then send the status of it to middle.
    
 ## 5. 参与所使用的通讯中间件优化：
    在开发此组件过程中，对公司的通讯组件urocissa，我也进行了修改。包括：
-   - 业务心跳合并到底层心跳，提供心跳数据采集接口
-   - 异步futurn，在get外，增加异步回调设置
+   - 业务心跳合并到底层心跳，提供心跳数据采集接口，因为当前业务处理情况也要上报，还有可能其它状态数据。
+   - 异步futurn，在轮询结果并get外，增加异步回调设置
    - 通讯层不仅可以注册处理者processor，还可以设置对应的线程池，这样个性化线程名称与阻塞队列容量。（模仿rocketmq）
    - 原组件的加密的是协议中body部分，是msg->java序列化->byte[]->des加密->byte[]->marshaller写byteBuf过程，居然中间出现了低效的Jdk序列化，我将java序列化改为hassian.
 
